@@ -1,0 +1,13 @@
+venv*/
+__pycache__/
+*.pyc
+.env
+artifacts/
+*.pem
+*.key
+*.log
+.DS_Store
+node_modules/
+bdm.json
+trust_policy.json
+temp_key.pem
