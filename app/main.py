@@ -1,4 +1,5 @@
 from fastapi import FastAPI, BackgroundTasks, HTTPException
+from fastapi.responses import HTMLResponse
 from contextlib import asynccontextmanager
 import sys
 import os
@@ -35,6 +36,14 @@ async def lifespan(app: FastAPI):
     app.state.pipeline = None
 
 app = FastAPI(title="AI Summarization Pipeline API", version="1.0.0", lifespan=lifespan)
+
+@app.get("/", response_class=HTMLResponse)
+def index_route():
+    index_path = os.path.join(os.path.dirname(__file__), "index.html")
+    if os.path.exists(index_path):
+        with open(index_path, "r", encoding="utf-8") as f:
+            return f.read()
+    return "<h1>AI Summarizer API is running</h1><p>Index file not found.</p>"
 
 @app.get("/health")
 def health_check():
